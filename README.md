@@ -19,7 +19,7 @@ Simulate an operations analyst workflow:
 - Late rate (% late flights)
 - Late rate by weekday (trend view)
 
-## Key Findings (example — update with your final numbers)
+## Key Findings
 - Overall late rate: ~19.8%
 - Highest late rate: Sunday (~22.8%) and Friday (~22.5%)
 - Lowest late rate: Tuesday (~15.9%)
