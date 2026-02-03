@@ -6,13 +6,13 @@ Analysis of 5,000 flight departures to find delay patterns by day of week, hour 
 
 - Track late departure rate using 15-minute threshold (FAA standard)
 - Find which days and times have the most delays
-- Compare delay patterns with passenger volume
+- Compare delay patterns with passenger volume to find correlations
 - Understand patterns that could help with scheduling
 
 ## Data
 
 - `flights.csv` - ATL outbound flights sample (5,000 records)
-- `us-daily-passengers.csv` - TSA daily passenger counts
+- `us-daily-passengers.csv` - TSA daily passenger counts (2023)
 
 ## Key Findings
 
@@ -32,8 +32,6 @@ Analysis of 5,000 flight departures to find delay patterns by day of week, hour 
 | Wednesday | 16.9% |
 | Tuesday | 15.9% (lowest) |
 
-**Finding:** Sunday has ~44% more delays than Tuesday.
-
 ![Delay by Day](delay_by_day.png)
 
 ### By Hour of Day
@@ -45,13 +43,29 @@ Analysis of 5,000 flight departures to find delay patterns by day of week, hour 
 | Evening (17-21) | ~27.7% |
 | Night (21+) | ~25.8% |
 
-**Finding:** Evening flights are about 2x more likely to be delayed than morning flights. This is probably because delays build up during the day (cascade effect).
+**Finding:** Evening flights are about 2x more likely to be delayed than morning flights. This is because delays build up during the day (cascade effect).
 
 ![Delay by Hour](delay_by_hour.png)
 
-### Passenger Volume Comparison
+### Passenger Volume vs Delays (Extension)
 
-Days with higher passenger volume (Sunday, Friday) tend to have higher delay rates. This makes sense - more passengers means fuller flights, busier airports, and tighter turnaround times.
+Comparing delay rates with average daily passenger volume:
+
+| Day | Delay Rate | Avg Passengers | Pattern |
+|-----|------------|----------------|---------|
+| Sunday | 22.8% (highest) | 2.51M (high) | High volume → High delays |
+| Friday | 22.5% | 2.55M (highest) | High volume → High delays |
+| Tuesday | 15.9% (lowest) | 2.10M (lowest) | Low volume → Low delays |
+| Saturday | 19.7% | 2.17M (low) | Low volume → Lower delays |
+
+![Comparison Chart](comparison_chart.png)
+
+**Pattern:** There is a clear correlation between passenger volume and delay rates. Days with more passengers have higher delay rates.
+
+**Why this happens:**
+- More passengers = fuller flights = less buffer time
+- Busier airports = more congestion = more delays
+- Tighter turnaround times when flights are full
 
 ## Business Implications
 
@@ -61,7 +75,7 @@ Why morning flights are better:
 - Crews are fresh (no timeout issues)
 
 Why Sunday is worst:
-- Weekend travel is heavier
+- Weekend travel is heavier (high passenger volume)
 - Recovery from Saturday operations
 
 **Recommendation:** If you want to minimize delays, fly on Tuesday morning.
@@ -74,10 +88,13 @@ Why Sunday is worst:
 
 ## Files
 
-- `flights-delays-project.ipynb` - main analysis
+- `flights-delays-project.ipynb` - main analysis notebook
 - `flights.csv` - flight data
 - `us-daily-passengers.csv` - passenger data
 - `EXECUTIVE_SUMMARY.md` - one-page summary
+- `delay_by_day.png` - delay rate by day chart
+- `delay_by_hour.png` - delay rate by hour chart
+- `comparison_chart.png` - side-by-side comparison of delays vs passengers
 
 ## Context
 
